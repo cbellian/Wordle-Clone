@@ -13,7 +13,7 @@ bool winConditions(bool[], int);
 int main(int argc, char * argv[])
 {
     std::ifstream wordFileIn;
-    wordFileIn.open(argv[1]);
+    wordFileIn.open("allWords.txt");
     if(wordFileIn.fail()){
         std::cout << "File failed to open. \n";
         return -1;
@@ -42,12 +42,15 @@ int main(int argc, char * argv[])
         for(char& c : input){
             c = tolower(c);
         }
-        std::cout << correctWord << std::endl;
         bool win = inputAndCheck(correctWord,input);
         if(win)
         {
             std::cout << "WIN \n";
             return 1;
+        }
+        if (i == 0 && !win)
+        {
+            std::cout << "The correct word was: " << correctWord << "\n";
         }
     }
     return 0;
