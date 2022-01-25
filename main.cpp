@@ -31,8 +31,15 @@ int main(int argc, char * argv[])
     std::string correctWord = arrOfWords[wordLoc];
     for (int i = 5; i >= 0; i--){
         std::cout << "Input Guess: \n";
-        getline(std::cin, input);
-        for(char &c : input){
+        int length = 0;
+        do{
+            getline(std::cin, input);
+            length = input.length();
+            if(length != 5){
+                std::cout << "Invalid Input. Must be 5 letters long.\n";
+            }
+        } while(length != 5);
+        for(char& c : input){
             c = tolower(c);
         }
         std::cout << correctWord << std::endl;
@@ -47,8 +54,13 @@ int main(int argc, char * argv[])
 }
 void letInWord(std::string Guess, std::string Correct, int arr[], int size){
     for (int i = 0; i < Correct.size(); i++){
-        int count = std::count(Guess.begin(), Guess.end(), Correct[i]);
-        arr[i] = count;
+        for(int j = 0; j < Correct.size(); j++){
+            if(Guess[i] == Correct[j])
+            {
+                int temp = arr[i];
+                arr[i] = temp + 1;
+            }
+        }
     }
 }
 void letInRightSpot(std::string guess, std::string correct, char wordSpot[], bool arr[], int size){
@@ -68,8 +80,7 @@ void letInRightSpot(std::string guess, std::string correct, char wordSpot[], boo
 }
 bool winConditions(bool correct[], int size){
     int count = std::count(correct, correct + 5, 1);
-    if (count == 5)
-    {
+    if (count == 5){
         return 1;
     }
     return 0;
@@ -87,8 +98,12 @@ bool inputAndCheck(std::string correct, std::string input){
         return 1;
     }
     else{
-        for(int i = 0; i<size;i++){
-            std::cout << wordRight[i];
+        for(char c : wordRight){
+            std::cout << c;
+        }
+        std::cout << "\n";
+        for(int i = 0; i < 5; i++){
+            std::cout << input[i] << " is in the word " << arrayOfIn[i] << " time(s)\n";
         }
     }
     return 0;
